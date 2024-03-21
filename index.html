@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decodificador de Texto</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body >
+    <header>
+        <img src="assets/images/Logo.png" alt="">
+    </header>
+    <main class="conteudo">
+        <section class="conteudo__ entrada">
+            <textarea name="" id="texto_entrada" cols="30" rows="10" placeholder="Digite seu texto"
+            class="conteudo__entrada__caixaDeTexto" oninput="habilitarBotoes()"></textarea>
+            <div class="conteudo__entrada__outros">
+                
+                <p><img src="assets/images/bi_exclamation-circle-fill.png" alt=""> Apenas letras minúsculas e sem acento.</p>
+                <div class="conteudo__entrada__outros__botoes">
+                    <button class="conteudo__entrada__outros__botoes__botao" onclick="criptografar()" id="botaoCriptografar" disabled>Criptografar</button>
+                    <button class="conteudo__entrada__outros__botoes__botao" onclick="descriptografar()"
+                    id="botaoDescriptografar" disabled>Descriptografar</button>
+                </div>
+            </div>
+        </section>
+        <section class="conteudo__saida">
+            <div class="conteudo__saida__semEntrada">
+                <img src="assets/images/High quality products 1 1.svg" alt="">
+                 <h2>Nenhuma mensagem encontrada</h2>
+                 <p>Digite o texto que você deseja criptografar ou descriptografar.</p>
+            </div>
+            <div class="conteudo__saida__aposEntrada">
+                <textarea name="" id="texto_saida" cols="30" rows="10" readonly></textarea>
+                <button class="conteudo__saida__botoes__botao" id="botaoCopiar" onclick="copiarTexto()">Copiar texto</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Desenvolvido por <strong>Amanda Freitas</strong></p>
+    </footer>
+
+
+    <script>
+        let textoEntrada = document.getElementById("texto_entrada");
+        let textoSaida = document.getElementById("texto_saida");
+        let botaoCriptografar = document.getElementById("botaoCriptografar");
+        let botaoDescriptografar = document.getElementById("botaoDescriptografar");
+
+        function criptografar() {
+            //Criptografar texto mesmo sendo inseridas letras maúsculas
+            let texto = textoEntrada.value.toLowerCase();
+            let textoCriptografado = texto.replace(/e/g, "enter").replace(/i/g, "imes").replace(/a/g, "ai").replace(/o/g, "ober").replace(/u/g, "ufat");
+
+            textoSaida.value = textoCriptografado;
+
+            mudarEstado();
+
+        }
+
+        function descriptografar() {
+            //Descriptografar texto mesmo sendo inseridas letras maúsculas
+            let texto = textoEntrada.value.toLowerCase();
+            let textoDescriptografado = texto.replace(/enter/g, "e").replace(/imes/g, "i").replace(/ai/g, "a").replace(/ober/g, "o").replace(/ufat/g, "u");
+
+            textoSaida.value = textoDescriptografado;
+
+            mudarEstado();
+        }
+
+        function copiarTexto() {
+            //Copiar texto para área de transferência
+            textoSaida.select();
+            document.execCommand("copy");
+            alert("Texto copiado com sucesso!");
+        }
+
+        function mudarEstado() {
+            //Esconde imagem e informações quando texto for criptografado ou dcescriptografado
+            let display = document.querySelector(".conteudo__saida__aposEntrada").style.display;
+
+            if (display === "none") {
+                document.querySelector(".conteudo__saida__aposEntrada").style.display = 'flex';
+
+                document.querySelector(".conteudo__saida__semEntrada").style.display = 'none';
+            } else {
+                document.querySelector(".conteudo__saida__aposEntrada").style.display = 'none';
+            }
+        }
+
+        function habilitarBotoes() {
+            if (textoEntrada.value.trim() !== "") {
+                botaoCriptografar.disabled = false;
+                botaoDescriptografar.disabled = false;
+            } else {
+                botaoCriptografar.disabled = true;
+                botaoDescriptografar.disabled = true;
+            }
+        }
+        
+    </script>
+
+</body>
+</html>
